@@ -13,7 +13,7 @@ const LoginForm = () => {
     const [error, setError] = useState('');
     const handleLogin = (event) => {
         event.preventDefault();
-        fetch('http://localhost:5000/auth/login', {
+        fetch('https://nodejs-authentication-server.vercel.app/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
