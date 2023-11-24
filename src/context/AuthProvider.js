@@ -7,13 +7,14 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+      getUser();
+     },[])
+
     const getUser = async () => {
-     
         try {
-          console.log('try block')
           setLoading(true);
-          console.log(loading)
-          const response = await fetch('https://nodejs-authentication-server.vercel.app/auth/getUser', {
+          const response = await fetch('http://localhost:5000/auth/getUser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -34,16 +35,17 @@ const AuthProvider = ({children}) => {
             toast.error(data?.error?.message)
           } else {
             setUser({});
+            setLoading(false)
           }
         } catch (err) {
-          toast.error(err.message)
+          // user not found or failed to fetch error
+          console.log(err);
+          // toast.error(err.message)
           setLoading(false);
         }
     };
 
-    useEffect(() => {
-      getUser();
-     },[])
+    
 
         const authInfo = {
           user,
