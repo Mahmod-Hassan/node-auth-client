@@ -17,7 +17,7 @@ const RegisterForm = () => {
         const data = {
             userName, email, password
         }
-        fetch('http://localhost:5000/auth/signup', {
+        fetch('https://nodejs-authentication-server.vercel.app/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

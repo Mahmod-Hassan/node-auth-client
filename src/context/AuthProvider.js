@@ -14,7 +14,7 @@ const AuthProvider = ({children}) => {
     const getUser = async () => {
         try {
           setLoading(true);
-          const response = await fetch('http://localhost:5000/auth/getUser', {
+          const response = await fetch('https://nodejs-authentication-server.vercel.app/auth/getUser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
