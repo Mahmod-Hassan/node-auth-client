@@ -25,7 +25,6 @@ const AuthProvider = ({children}) => {
           });
 
           const data = await response.json();
-          console.log(data);
          
           if (data?.email) {
             setUser(data);
@@ -39,7 +38,7 @@ const AuthProvider = ({children}) => {
           }
         } catch (err) {
           // user not found or failed to fetch error
-          console.log(err);
+          // console.log(err);
           // toast.error(err.message)
           setLoading(false);
         }
