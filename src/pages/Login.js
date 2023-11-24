@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
@@ -6,7 +7,7 @@ const LoginForm = () => {
     const {getUser} = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const from = location?.state?.from?.pathname || '/';
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -21,19 +22,15 @@ const LoginForm = () => {
         })
         .then(res => res.json())
         .then(data => {
-            if(data.accessToken && !data.message && !data?.error){
+            if(data?.accessToken){
                 setError('');
                 localStorage.setItem('access_token', data?.accessToken);
-                localStorage.setItem('loggedIn', true);
-                getUser();
+                toast.success('successfully loggedin')
+                getUser()
                 navigate(from, { replace: true });
             }
             else if (data?.error){
                 setError(data?.error)
-            }
-            else if (data.message === 'token expired'){
-                setError('token has been expired please login again')
-                localStorage.clear();
             }
         })
     }
@@ -60,8 +57,9 @@ const LoginForm = () => {
                         />
                     </div>
 
-   {/* error from my erorr state */}
-   <p className='text-red-400 text-sm'>{error && <span>{error}</span>}</p>
+                    {/* error from my erorr state */}
+                   <p className='text-red-400'>{error && <span>{error}</span>}</p>
+
                     <div className="flex items-center justify-between mt-4">
                         <a href="#" className="text-sm text-gray-600 hover:text-gray-500">Forget Password?</a>
 

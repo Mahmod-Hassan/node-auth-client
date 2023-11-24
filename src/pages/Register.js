@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
 const RegisterForm = () => {
     const {getUser} = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
@@ -24,20 +26,17 @@ const RegisterForm = () => {
         })
         .then(res => res.json())
         .then((data) => {
-            console.log(data)
             if(data?.data?.email && data?.accessToken){
                 localStorage.setItem('access_token', data?.accessToken)
-                localStorage.setItem('loggedIn', true)
                 setError('');
-                toast.success('you sign up successfully');
                 getUser();
-                navigate('/');
+                toast.success('you sign up successfully');
+                navigate(from, { replace: true });
             }else if(data?.error){
                 setError(data?.error)
             }
         })
         .catch(err => {
-            console.log(err.message);
             toast.error(err.message)
         })
     }

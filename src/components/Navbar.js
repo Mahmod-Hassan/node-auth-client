@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthProvider';
 
 const Navbar = () => {
     const {user, setUser} = useContext(AuthContext);
+
     const handleLogout = () => {
         localStorage.clear();
         setUser({})
@@ -21,7 +22,7 @@ const Navbar = () => {
                     !user?.email ?
                     (
                     <Link to='/login'>
-                      <button className="px-6 py-2 text-sm text-white font-medium  transition-colors duration-300 transform bg-gray-500 rounded-lg hover:bg-gray-400 ">Login</button>
+                      <button className="px-6 py-2 text-sm text-white font-medium  transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 ">Login</button>
                    </Link>
                     )
                     :
@@ -29,7 +30,6 @@ const Navbar = () => {
                    <button
                    onClick={handleLogout}
                    className="px-6 py-2 text-sm text-white font-medium  transition-colors duration-300 transform bg-red-500 rounded-lg hover:bg-gray-400 ">Logout</button>
-
                     )
                   }
                 </li>
